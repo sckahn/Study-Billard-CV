@@ -26,8 +26,6 @@ public class MainActivity extends AppCompatActivity {
         if (!OpenCVLoader.initDebug()) {
             Log.e("OpenCV", "Initialization Failed");
         }
-    }
-    }
 
     private void callHello() {
         Hello.hello();
