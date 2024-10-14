@@ -82,10 +82,6 @@ public class MainActivity extends AppCompatActivity {
             // Display or process the segmented image
             // For example, you can update an ImageView with the new segmented image
         }
-        if (inputImage != null) {
-            Mat segmented = ColorSegmentation.segmentByColor(inputImage, lowerBound, upperBound);
-            // Display or process the segmented image
-        }
 
     private static final int PICK_IMAGE_REQUEST = 1;
     private static final int STORAGE_PERMISSION_CODE = 101;
@@ -97,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        setupSliders();
         // Check for storage permission
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, STORAGE_PERMISSION_CODE);
