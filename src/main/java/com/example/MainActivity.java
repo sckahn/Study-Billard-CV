@@ -25,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
         if (!OpenCVLoader.initDebug()) {
             Log.e("OpenCV", "Initialization Failed");
         }
-        setupSliders();
     }
 
     private void setupSliders() {
@@ -81,6 +80,11 @@ public class MainActivity extends AppCompatActivity {
         if (inputImage != null) {
             Mat segmented = ColorSegmentation.segmentByColor(inputImage, lowerBound, upperBound);
             // Display or process the segmented image
+            // For example, you can update an ImageView with the new segmented image
+        }
+        if (inputImage != null) {
+            Mat segmented = ColorSegmentation.segmentByColor(inputImage, lowerBound, upperBound);
+            // Display or process the segmented image
         }
 
     private static final int PICK_IMAGE_REQUEST = 1;
@@ -113,13 +117,8 @@ public class MainActivity extends AppCompatActivity {
             Uri imageUri = data.getData();
             String imagePath = getPathFromUri(imageUri);
             if (imagePath != null) {
-                Mat inputImage = Imgcodecs.imread(imagePath);
-                Scalar lowerBound = new Scalar(35, 100, 100); // Example lower bound for green
-                Scalar upperBound = new Scalar(85, 255, 255); // Example upper bound for green
-
-                Mat segmented = ColorSegmentation.segmentByColor(inputImage, lowerBound, upperBound);
-
-                // Display or process the segmented image
+                inputImage = Imgcodecs.imread(imagePath);
+                updateSegmentation();
             } else {
                 Toast.makeText(this, "Failed to get image path", Toast.LENGTH_SHORT).show();
             }
