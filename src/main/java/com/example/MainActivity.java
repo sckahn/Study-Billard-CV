@@ -22,7 +22,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // Example usage
-        Mat inputImage = ... // Load your image here
+        // Load your image here
+        Mat inputImage = Imgcodecs.imread("/path/to/your/image.jpg");
         Scalar lowerBound = new Scalar(35, 100, 100); // Example lower bound for green
         Scalar upperBound = new Scalar(85, 255, 255); // Example upper bound for green
 
