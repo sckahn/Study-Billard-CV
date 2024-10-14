@@ -1,6 +1,5 @@
 package com.example;
 
-import com.example.Hello;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -26,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
         if (!OpenCVLoader.initDebug()) {
             Log.e("OpenCV", "Initialization Failed");
         }
-    }
     }
 
     private void callHello() {
