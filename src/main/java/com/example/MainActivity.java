@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
             Log.e("OpenCV", "Initialization Failed");
         }
     }
+    }
 
     private void setupSliders() {
         SeekBar seekBarHue = findViewById(R.id.seekBarHue);
