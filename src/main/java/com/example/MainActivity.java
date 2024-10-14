@@ -6,7 +6,9 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.widget.SeekBar;
 import android.widget.Toast;
+import org.opencv.imgcodecs.Imgcodecs;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -23,10 +25,70 @@ public class MainActivity extends AppCompatActivity {
         if (!OpenCVLoader.initDebug()) {
             Log.e("OpenCV", "Initialization Failed");
         }
+        setupSliders();
     }
+
+    private void setupSliders() {
+        SeekBar seekBarHue = findViewById(R.id.seekBarHue);
+        SeekBar seekBarSaturation = findViewById(R.id.seekBarSaturation);
+        SeekBar seekBarValue = findViewById(R.id.seekBarValue);
+
+        seekBarHue.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                lowerBound.val[0] = progress;
+                upperBound.val[0] = progress + 50; // Example range
+                updateSegmentation();
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {}
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {}
+        });
+
+        seekBarSaturation.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                lowerBound.val[1] = progress;
+                updateSegmentation();
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {}
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {}
+        });
+
+        seekBarValue.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                lowerBound.val[2] = progress;
+                updateSegmentation();
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {}
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {}
+        });
+    }
+
+    private void updateSegmentation() {
+        if (inputImage != null) {
+            Mat segmented = ColorSegmentation.segmentByColor(inputImage, lowerBound, upperBound);
+            // Display or process the segmented image
+        }
 
     private static final int PICK_IMAGE_REQUEST = 1;
     private static final int STORAGE_PERMISSION_CODE = 101;
+    private Scalar lowerBound = new Scalar(35, 100, 100); // Initial lower bound for green
+    private Scalar upperBound = new Scalar(85, 255, 255); // Initial upper bound for green
+    private Mat inputImage;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
